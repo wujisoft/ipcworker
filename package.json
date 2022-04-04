@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint src/**/*.ts",
     "test": "jest --runInBand",
-    "build": "webpack"
+    "build": "tsc"
   },
   "files": [
     "dist/ipcworker.js",
