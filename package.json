@@ -2,8 +2,8 @@
   "name": "ipcworker",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/ipcworker.js",
-  "types": "dist/ipcworker.d.ts",
+  "main": "lib/iindex.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint src/**/*.ts",
     "test": "jest --runInBand",
