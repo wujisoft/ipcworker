@@ -2,7 +2,7 @@
   "name": "ipcworker",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/iindex.js",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint src/**/*.ts",
