@@ -1,4 +1,3 @@
-import { RpcMethodOptions } from "ipcworker";
 import { commandOptions } from "redis";
 import { Context, IpcRedisClient } from "..";
 

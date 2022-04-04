@@ -1,4 +1,4 @@
-import { RpcMethodOptions } from "ipcworker";
+import { RpcMethodOptions } from "..";
 import { IPC } from "..";
 
 export class RPC {
