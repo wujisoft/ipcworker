@@ -1,3 +1,4 @@
+import { MsgPackDecoder, MsgPackEncoder } from "msgpackstream";
 import { commandOptions } from "redis";
 import { Context, IpcRedisClient } from "..";
 
@@ -173,13 +174,27 @@ export class IPC {
         }));
         this.#reply_thread = this.#run_reply(this.#redis.duplicate())
     }
-
+    /*
     #decode(msg: any): any {
         return JSON.parse(msg);
     }
 
     #encode(msg: any): any {
         return JSON.stringify(msg) ?? 'null';
+    }
+    */
+    #msgpack_enc: MsgPackEncoder = new MsgPackEncoder({EnablePacketTable: false, EnableStreamTable: false});
+    #msgpack_dec: MsgPackDecoder = new MsgPackDecoder();
+
+    #decode(value: any): any {
+        if(!value)
+            return null;
+        const buffer = Buffer.from(value, 'base64');
+        return this.#msgpack_dec.decodeStream(buffer);
+    }
+
+    #encode(msg: any): any {
+        return Buffer.from(this.#msgpack_enc.encodeStream(msg)).toString('base64');
     }
 
     
@@ -359,7 +374,7 @@ export class IPC {
             const replyTo = this.#replystream.key;
             const context = this.#encode(Context.getCallContext());
             const call: IPCCall = {
-                method, params: this.#encode(params), sequence, replyTo, context
+                method, params: <any>this.#encode(params), sequence, replyTo, context
             };
             const targetQueue = (type !== 'broadcast') ? 'STREAM/' + queue : 'BROADCAST/' + queue;
             if(type === 'invoke') {
